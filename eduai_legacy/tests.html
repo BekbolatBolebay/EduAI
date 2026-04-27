@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>EduAI - Тесттер</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "primary": "#00458d",
+                    "primary-container": "#005cb9",
+                    "on-primary": "#ffffff",
+                    "background": "#f7f9fb",
+                    "surface-container": "#eceef0",
+                    "on-surface": "#191c1e",
+                    "on-surface-variant": "#424752",
+                    "secondary-container": "#00ccf9",
+            }
+          },
+        },
+      }
+    </script>
+    <style>
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        body { min-height: max(884px, 100dvh); }
+    </style>
+</head>
+<body class="bg-[#f7f9fb] font-body-md text-on-surface">
+    <!-- Top App Bar -->
+    <header class="flex justify-between items-center px-4 py-3 w-full sticky top-0 bg-white/80 backdrop-blur-xl border-b border-blue-100/50 shadow-sm z-50">
+        <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-blue-600">school</span>
+            <h1 class="text-xl font-extrabold text-blue-700 tracking-tighter">EduAI</h1>
+        </div>
+        <div class="flex items-center gap-4">
+            <button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-blue-50 transition-colors">
+                <span class="material-symbols-outlined text-slate-400">notifications</span>
+            </button>
+            <a href="profile.html" class="w-8 h-8 rounded-full overflow-hidden border-2 border-primary block">
+                <img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCdGJMCNInwyCtvT0CrUPbm2y3Kq0p9ViedOl07H3wmKROvYzCjEYXF8roOJWIHRHU3JrmB8UcNsjtv27tZXsZ6VrrGwZXzyP4X19K5LDkckknn9qZoytI5BydA60o0stGRKnyz4HUNbdIDiWf3KpFIQmMvSMQxKYNHEWsPhKgPScZvqNlT1Qp-uoJlYePAo6Fu8H0Djov6tDberkzql_z5W_UGaCKr4jGXBXi64vFzMHireeeyOHqbEzFE4i1FMAMfX6XubDrHkYC6"/>
+            </a>
+        </div>
+    </header>
+
+    <main class="max-w-[1280px] mx-auto px-4 pt-6 pb-32">
+        <!-- Banner -->
+        <section class="mb-8">
+            <div class="relative overflow-hidden rounded-[24px] bg-gradient-to-br from-primary-container to-primary p-8 text-white shadow-lg">
+                <div class="relative z-10 max-w-lg">
+                    <h2 class="text-2xl font-bold mb-2">Деңгейді анықтау</h2>
+                    <p class="text-white/80 mb-6 text-sm">AI арқылы біліміңізді тексеріп, жеке оқу жоспарын алыңыз.</p>
+                    <button class="bg-white text-primary px-6 py-3 rounded-full font-bold shadow-xl active:scale-95 transition-transform">Тестілеуді бастау</button>
+                </div>
+                <span class="material-symbols-outlined text-[200px] absolute right-[-20px] top-[-20px] opacity-20">psychology</span>
+            </div>
+        </section>
+
+        <!-- Stats -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div class="md:col-span-2 bg-white rounded-[24px] p-6 shadow-sm border border-blue-50">
+                <h3 class="text-xl font-bold mb-6">Ағымдағы прогресс</h3>
+                <div class="space-y-6">
+                    <div>
+                        <div class="flex justify-between text-sm mb-2">
+                            <span>ҰБТ Дайындық: Математика</span>
+                            <span class="font-bold">90%</span>
+                        </div>
+                        <div class="w-full bg-slate-100 rounded-full h-3">
+                            <div class="bg-secondary-container h-3 rounded-full" style="width: 90%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white rounded-[24px] p-6 shadow-sm border border-blue-50">
+                <h3 class="text-xl font-bold mb-4">Соңғы нәтижелер</h3>
+                <div class="space-y-4">
+                    <div class="flex items-center gap-3 p-3 bg-slate-50 rounded-xl">
+                        <div class="w-10 h-10 rounded-lg bg-green-100 text-green-700 flex items-center justify-center">
+                            <span class="material-symbols-outlined">check_circle</span>
+                        </div>
+                        <div class="text-sm font-bold">Тарих</div>
+                        <div class="ml-auto font-bold text-green-700">19/20</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- BottomNavBar -->
+    <nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-2 pb-6 pt-3 bg-white border-t border-blue-50 shadow-[0_-8px_30px_rgba(0,92,185,0.08)] rounded-t-[24px]">
+        <a class="flex flex-col items-center justify-center text-slate-400 hover:text-blue-500 transition-all active:scale-90" href="home.html">
+            <span class="material-symbols-outlined mb-1">home</span>
+            <span class="text-[11px] font-medium">Оқу</span>
+        </a>
+        <a class="flex flex-col items-center justify-center text-blue-600 bg-blue-50/50 rounded-2xl px-3 py-1 active:scale-90" href="tests.html">
+            <span class="material-symbols-outlined mb-1" style="font-variation-settings: 'FILL' 1;">quiz</span>
+            <span class="text-[11px] font-medium">Тесттер</span>
+        </a>
+        <a class="flex flex-col items-center justify-center text-slate-400 hover:text-blue-500 transition-all active:scale-90" href="chat.html">
+            <span class="material-symbols-outlined mb-1">smart_toy</span>
+            <span class="text-[11px] font-medium">Ментор</span>
+        </a>
+        <a class="flex flex-col items-center justify-center text-slate-400 hover:text-blue-500 transition-all active:scale-90" href="catalog.html">
+            <span class="material-symbols-outlined mb-1">menu_book</span>
+            <span class="text-[11px] font-medium">Каталог</span>
+        </a>
+        <a class="flex flex-col items-center justify-center text-slate-400 hover:text-blue-500 transition-all active:scale-90" href="profile.html">
+            <span class="material-symbols-outlined mb-1">person</span>
+            <span class="text-[11px] font-medium">Мен</span>
+        </a>
+    </nav>
+</body>
+</html>

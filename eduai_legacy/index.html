@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html class="light" lang="kk">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>EduAI - Кіру</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary-fixed": "#001f28",
+                        "surface-container-low": "#f2f4f6",
+                        "inverse-primary": "#aac7ff",
+                        "on-primary": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "surface-container": "#eceef0",
+                        "surface-dim": "#d8dadc",
+                        "on-tertiary-fixed-variant": "#6d3900",
+                        "tertiary": "#6d3900",
+                        "inverse-on-surface": "#eff1f3",
+                        "on-primary-fixed": "#001b3e",
+                        "background": "#f7f9fb",
+                        "tertiary-fixed": "#ffdcc2",
+                        "outline": "#727784",
+                        "error": "#ba1a1a",
+                        "secondary": "#00677f",
+                        "primary-container": "#005cb9",
+                        "secondary-fixed-dim": "#4cd6ff",
+                        "surface-container-high": "#e6e8ea",
+                        "primary-fixed-dim": "#aac7ff",
+                        "surface-variant": "#e0e3e5",
+                        "on-primary-fixed-variant": "#00458e",
+                        "surface-bright": "#f7f9fb",
+                        "on-primary-container": "#c6d8ff",
+                        "secondary-fixed": "#b7eaff",
+                        "on-secondary-container": "#005266",
+                        "surface-container-highest": "#e0e3e5",
+                        "on-tertiary": "#ffffff",
+                        "on-tertiary-container": "#ffcea9",
+                        "inverse-surface": "#2d3133",
+                        "primary": "#00458d",
+                        "on-secondary-fixed-variant": "#004e60",
+                        "on-error": "#ffffff",
+                        "on-background": "#191c1e",
+                        "tertiary-container": "#8f4d00",
+                        "primary-fixed": "#d7e3ff",
+                        "on-surface": "#191c1e",
+                        "on-tertiary-fixed": "#2e1500",
+                        "on-surface-variant": "#424752",
+                        "on-secondary": "#ffffff",
+                        "surface-tint": "#015cb9",
+                        "outline-variant": "#c2c6d4",
+                        "on-error-container": "#93000a",
+                        "secondary-container": "#00ccf9",
+                        "surface": "#f7f9fb",
+                        "tertiary-fixed-dim": "#ffb77c"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "24px",
+                        "margin": "32px",
+                        "container-max-width": "1280px",
+                        "unit": "8px"
+                    },
+                    "fontFamily": {
+                        "h3": ["Plus Jakarta Sans"],
+                        "h2": ["Plus Jakarta Sans"],
+                        "body-md": ["Plus Jakarta Sans"],
+                        "h1": ["Plus Jakarta Sans"],
+                        "label-caps": ["Plus Jakarta Sans"],
+                        "body-lg": ["Plus Jakarta Sans"]
+                    },
+                    "fontSize": {
+                        "h3": ["24px", {"lineHeight": "1.4", "fontWeight": "700"}],
+                        "h2": ["32px", {"lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "h1": ["48px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                        "label-caps": ["12px", {"lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                        "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen flex items-center justify-center p-gutter relative overflow-hidden">
+    <!-- Decorative background elements -->
+    <div class="absolute top-[-10%] right-[-10%] w-[500px] h-[500px] bg-primary/5 rounded-full blur-[100px]"></div>
+    <div class="absolute bottom-[-10%] left-[-10%] w-[400px] h-[400px] bg-secondary/5 rounded-full blur-[80px]"></div>
+    
+    <main class="w-full max-w-[480px] z-10">
+        <!-- Brand Identity -->
+        <div class="text-center mb-8">
+            <div class="inline-flex items-center justify-center w-16 h-16 bg-primary-container text-on-primary-container rounded-2xl mb-4 shadow-lg shadow-primary/10">
+                <span class="material-symbols-outlined text-[32px]">school</span>
+            </div>
+            <h1 class="font-h2 text-h2 text-primary tracking-tighter mb-2">EduAI</h1>
+            <p class="font-body-md text-on-surface-variant">Болашақ білім берудің жасанды интеллектісі</p>
+        </div>
+
+        <!-- Login Card -->
+        <div class="glass-panel rounded-[24px] p-8 shadow-[0_8px_40px_rgba(0,69,141,0.08)]">
+            <div class="mb-8">
+                <h2 class="font-h3 text-h3 text-on-surface mb-1">Қош келдіңіз!</h2>
+                <p class="text-on-surface-variant">Жүйеге кіру үшін деректеріңізді енгізіңіз</p>
+            </div>
+            <form class="space-y-5" onsubmit="window.location.href='home.html'; return false;">
+                <!-- Username/Email Field -->
+                <div class="space-y-2">
+                    <label class="block font-label-caps text-label-caps text-on-surface-variant uppercase ml-1" for="identifier">Электрондық пошта немесе пайдаланушы аты</label>
+                    <div class="relative group">
+                        <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline group-focus-within:text-primary transition-colors">person</span>
+                        <input class="w-full bg-surface-container-low border-2 border-transparent focus:border-primary focus:bg-surface-container-lowest rounded-xl py-3.5 pl-12 pr-4 outline-none transition-all font-body-md" id="identifier" placeholder="mysaly@edu.kz" type="text" required/>
+                    </div>
+                </div>
+                <!-- Password Field -->
+                <div class="space-y-2">
+                    <div class="flex justify-between items-end px-1">
+                        <label class="block font-label-caps text-label-caps text-on-surface-variant uppercase" for="password">Құпия сөз</label>
+                        <a class="text-primary font-label-caps text-[11px] hover:underline transition-all" href="#">Құпия сөзді ұмыттыңыз ба?</a>
+                    </div>
+                    <div class="relative group">
+                        <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline group-focus-within:text-primary transition-colors">lock</span>
+                        <input class="w-full bg-surface-container-low border-2 border-transparent focus:border-primary focus:bg-surface-container-lowest rounded-xl py-3.5 pl-12 pr-12 outline-none transition-all font-body-md" id="password" placeholder="••••••••" type="password" required/>
+                        <button class="absolute right-4 top-1/2 -translate-y-1/2 text-outline hover:text-on-surface transition-colors" type="button">
+                            <span class="material-symbols-outlined">visibility</span>
+                        </button>
+                    </div>
+                </div>
+                <!-- Login Button -->
+                <button class="w-full bg-gradient-to-b from-primary to-primary-container text-on-primary font-body-md font-semibold py-4 rounded-xl shadow-[0_4px_12px_rgba(0,92,185,0.25)] hover:shadow-[0_6px_20px_rgba(0,92,185,0.35)] active:scale-[0.98] transition-all flex items-center justify-center gap-2" type="submit">
+                    <span>Кіру</span>
+                    <span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+                </button>
+            </form>
+            <!-- Divider -->
+            <div class="relative my-8 flex items-center">
+                <div class="flex-grow border-t border-outline-variant"></div>
+                <span class="px-4 text-outline font-label-caps text-[11px] uppercase bg-transparent">немесе арқылы кіру</span>
+                <div class="flex-grow border-t border-outline-variant"></div>
+            </div>
+            <!-- Social Logins -->
+            <div class="grid grid-cols-2 gap-4">
+                <button class="flex items-center justify-center gap-3 py-3 border border-outline-variant rounded-xl hover:bg-surface-container-low active:scale-95 transition-all">
+                    <img alt="Google icon" class="w-5 h-5" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAnn13-hHrBIF380ssZfs1-6V_LF8FU2CRsQ7jXSxKtLYmfFnIXS_ftaPq3JgAzhlT7tBJWoSm2e0SW8j_YaLk9w7TBGgTGRoxXBjrqZwH_o4buQokg7zqaAqoOkpHNV0yvQu3-6dM1AOuf2DMBpiNyzLCSLMuwq20fghXnBD4vj61B-D9D7AcsV_13E2rQez_NAZjgzNCjmXHgFAQ9Jycmyy1jYHIT5dSCuKcWm7wYlnh-0Wf8S6fBr2T5H7MKBhUDR5tHDpO8uFVC"/>
+                    <span class="font-body-md font-medium text-on-surface">Google</span>
+                </button>
+                <button class="flex items-center justify-center gap-3 py-3 border border-outline-variant rounded-xl hover:bg-surface-container-low active:scale-95 transition-all">
+                    <span class="material-symbols-outlined text-on-surface text-[22px]">ios</span>
+                    <span class="font-body-md font-medium text-on-surface">Apple</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Footer Links -->
+        <div class="text-center mt-8">
+            <p class="font-body-md text-on-surface-variant">
+                Тіркелген жоқсыз ба? 
+                <a class="text-primary font-bold hover:underline ml-1" href="register.html">Жаңа аккаунт ашу</a>
+            </p>
+        </div>
+
+        <!-- AI Mascot Integration -->
+        <div class="mt-12 flex justify-center items-center opacity-60 grayscale hover:grayscale-0 transition-all duration-500 cursor-default">
+            <div class="bg-white p-3 rounded-2xl shadow-sm flex items-center gap-3 border border-blue-50">
+                <div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container">
+                    <span class="material-symbols-outlined">smart_toy</span>
+                </div>
+                <div class="text-left">
+                    <p class="text-[10px] font-label-caps text-secondary-fixed-dim uppercase">Көмек керек пе?</p>
+                    <p class="text-xs font-semibold text-on-surface">Мен сізге көмектесе аламын</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Bottom background aesthetic -->
+    <div class="fixed bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-primary via-secondary to-primary-container"></div>
+</body>
+</html>
