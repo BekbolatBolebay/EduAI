@@ -123,11 +123,44 @@ export function TestModal({ open, onOpenChange, subject = "Жалпы білім
     }
   }
 
-  const handleFinish = () => {
+  const handleFinish = async () => {
     const newAnswers = [...answers]
     newAnswers[currentQuestion] = selectedAnswer
     setAnswers(newAnswers)
     setShowResult(true)
+
+    // Save to Supabase
+    try {
+      const { data: { user } } = await supabase.auth.getUser()
+      if (!user) return
+
+      const finalScore = calculateScore()
+      const percentage = questions.length > 0 ? (finalScore / questions.length) * 100 : 0
+      const level = percentage >= 80 ? "Жоғары" : percentage >= 60 ? "Орташа" : "Төмен"
+
+      // 1. Save result
+      await supabase.from("test_results").insert({
+        user_id: user.id,
+        test_title: subject,
+        score: finalScore,
+        total_questions: questions.length,
+        level: level
+      })
+
+      // 2. Update XP (10 XP per correct answer + bonus for finish)
+      const xpGain = (finalScore * 10) + 20
+      const { data: profile } = await supabase
+        .from("profiles")
+        .select("xp")
+        .eq("id", user.id)
+        .single()
+      
+      const newXp = (profile?.xp || 0) + xpGain
+      await supabase.from("profiles").update({ xp: newXp }).eq("id", user.id)
+
+    } catch (e) {
+      console.error("Error saving results:", e)
+    }
   }
 
   const calculateScore = () => {

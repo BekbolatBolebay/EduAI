@@ -8,10 +8,11 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Progress } from "@/components/ui/progress"
 import { Badge } from "@/components/ui/badge"
-import { Play, Flame, Star, CheckCircle, Lightbulb, ChevronRight, Plus } from "lucide-react"
+import { Play, Flame, Star, CheckCircle, Lightbulb, ChevronRight, Plus, BrainCircuit } from "lucide-react"
 import Link from "next/link"
 import { supabase } from "@/lib/supabase"
 import { useRouter } from "next/navigation"
+import { Leaderboard } from "@/components/leaderboard"
 
 interface Course {
   id: number
@@ -126,68 +127,34 @@ export default function HomePage() {
         </Card>
 
         {/* Stats Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <Card className="border shadow-sm hover:shadow-xl transition-all rounded-[32px]">
-            <CardContent className="p-6 flex items-center gap-4">
-              <div className="w-14 h-14 rounded-2xl bg-amber-100 flex items-center justify-center flex-shrink-0 shadow-inner">
-                <Flame className="h-7 w-7 text-amber-600" />
-              </div>
-              <div className="flex-1 min-w-0">
-                <p className="text-[10px] text-muted-foreground uppercase font-black tracking-widest">Белсенділік</p>
-                <p className="text-3xl font-black text-foreground">{profile?.streak || 0} Күн</p>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="border shadow-sm hover:shadow-xl transition-all rounded-[32px]">
-            <CardContent className="p-6 flex items-center gap-4">
-              <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center flex-shrink-0 shadow-inner">
-                <Star className="h-7 w-7 text-primary" />
-              </div>
-              <div className="flex-1 min-w-0">
-                <p className="text-[10px] text-muted-foreground uppercase font-black tracking-widest">Ұпайлар</p>
-                <p className="text-3xl font-black text-foreground">{profile?.xp || 0} XP</p>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="border shadow-sm hover:shadow-xl transition-all rounded-[32px]">
-            <CardContent className="p-6 flex items-center gap-4">
-              <div className="w-14 h-14 rounded-2xl bg-emerald-100 flex items-center justify-center flex-shrink-0 shadow-inner">
-                <CheckCircle className="h-7 w-7 text-emerald-600" />
-              </div>
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center justify-between">
-                  <p className="text-[10px] text-muted-foreground uppercase font-black tracking-widest">Прогресс</p>
-                  <span className="text-sm font-black text-emerald-600">68%</span>
-                </div>
-                <Progress value={68} className="h-2 mt-2" />
-              </div>
-            </CardContent>
-          </Card>
         </div>
 
-        {/* AI Recommendation */}
-        <div className="relative group">
-          <div className="absolute -inset-1 bg-gradient-to-r from-primary to-blue-600 rounded-[36px] blur opacity-20 group-hover:opacity-40 transition duration-1000 group-hover:duration-200"></div>
-          <Card className="relative bg-card border-border/50 rounded-[32px] overflow-hidden">
-            <CardContent className="p-6">
-              <div className="flex items-start gap-5">
-                <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center flex-shrink-0 animate-pulse">
-                  <Lightbulb className="h-7 w-7 text-primary" />
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {/* AI Recommendation */}
+          <div className="lg:col-span-2 relative group">
+            <div className="absolute -inset-1 bg-gradient-to-r from-primary to-blue-600 rounded-[36px] blur opacity-20 group-hover:opacity-40 transition duration-1000 group-hover:duration-200"></div>
+            <Card className="relative bg-card border-border/50 rounded-[32px] overflow-hidden h-full">
+              <CardContent className="p-6">
+                <div className="flex items-start gap-5">
+                  <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center flex-shrink-0 animate-bounce">
+                    <BrainCircuit className="h-7 w-7 text-primary" />
+                  </div>
+                  <div className="space-y-2">
+                    <h3 className="font-black text-lg">AI-дан жеке ұсыныс</h3>
+                    <p className="text-sm text-muted-foreground font-medium leading-relaxed">
+                      Соңғы тест нәтижелеріне қарағанда, сізге <span className="text-foreground font-bold">"{profile?.grade || "10-сынып"}"</span> деңгейіндегі <span className="text-primary font-bold">Математикадан "Тригонометрия"</span> бөлімін қайталау пайдалы болады. Бұл сіздің нәтижеңізді 15%-ға жақсартуы мүмкін.
+                    </p>
+                    <Button size="lg" className="rounded-2xl px-8 font-black mt-2">
+                      Қайталауды бастау
+                    </Button>
+                  </div>
                 </div>
-                <div className="space-y-2">
-                  <h3 className="font-black text-lg">AI-дан жеке ұсыныс</h3>
-                  <p className="text-sm text-muted-foreground font-medium leading-relaxed">
-                    Соңғы тест нәтижелеріне қарағанда, сізге <span className="text-foreground font-bold">"{profile?.grade || "10-сынып"}"</span> деңгейіндегі Физикадан "Динамика" бөлімін қайталау пайдалы болады.
-                  </p>
-                  <Button size="lg" className="rounded-2xl px-8 font-black mt-2">
-                    Қайталауды бастау
-                  </Button>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Leaderboard */}
+          <Leaderboard />
         </div>
 
         {/* Courses Section */}
