@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>EduAI - Профиль</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "primary": "#00458d",
+                    "primary-container": "#005cb9",
+                    "background": "#f7f9fb",
+                    "on-surface": "#191c1e",
+                    "on-surface-variant": "#424752",
+                    "secondary": "#00677f",
+                    "secondary-container": "#00ccf9",
+                    "error": "#ba1a1a",
+                    "error-container": "#ffdad6",
+            }
+          },
+        },
+      }
+    </script>
+    <style>
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        body { min-height: max(884px, 100dvh); }
+    </style>
+</head>
+<body class="bg-[#f7f9fb] font-body-md text-on-surface pb-32">
+    <!-- TopAppBar -->
+    <header class="bg-white/80 backdrop-blur-xl border-b border-blue-100/50 shadow-sm sticky top-0 z-50 flex justify-between items-center px-4 py-3 w-full">
+        <div class="flex items-center gap-2">
+            <a href="home.html" class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-blue-600">school</span>
+                <span class="text-xl font-extrabold text-blue-700 tracking-tighter">EduAI</span>
+            </a>
+        </div>
+        <button class="p-2 rounded-full hover:bg-blue-50 transition-colors">
+            <span class="material-symbols-outlined text-slate-400">notifications</span>
+        </button>
+    </header>
+
+    <main class="max-w-[1280px] mx-auto px-4 py-8">
+        <!-- Profile Header -->
+        <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-primary-container to-primary p-8 mb-8 text-white shadow-lg">
+            <div class="relative z-10 flex flex-col md:flex-row items-center gap-6">
+                <div class="w-32 h-32 rounded-full border-4 border-white/30 overflow-hidden shadow-xl">
+                    <img alt="Avatar" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCdGJMCNInwyCtvT0CrUPbm2y3Kq0p9ViedOl07H3wmKROvYzCjEYXF8roOJWIHRHU3JrmB8UcNsjtv27tZXsZ6VrrGwZXzyP4X19K5LDkckknn9qZoytI5BydA60o0stGRKnyz4HUNbdIDiWf3KpFIQmMvSMQxKYNHEWsPhKgPScZvqNlT1Qp-uoJlYePAo6Fu8H0Djov6tDberkzql_z5W_UGaCKr4jGXBXi64vFzMHireeeyOHqbEzFE4i1FMAMfX6XubDrHkYC6"/>
+                </div>
+                <div class="text-center md:text-left">
+                    <h1 class="text-2xl font-bold mb-1">Алихан Темірлан</h1>
+                    <div class="flex flex-wrap justify-center md:justify-start gap-2 items-center opacity-90">
+                        <span class="px-3 py-1 bg-white/20 rounded-full text-sm">11-сынып</span>
+                        <span class="px-3 py-1 bg-white/20 rounded-full text-sm">8-деңгей (Pro)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            <div class="lg:col-span-7 space-y-6">
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-blue-50">
+                    <h2 class="text-lg font-bold mb-6 flex items-center gap-2">
+                        <span class="material-symbols-outlined text-primary">settings</span>
+                        Баптаулар
+                    </h2>
+                    <div class="space-y-2">
+                        <div class="flex items-center justify-between p-4 hover:bg-blue-50 rounded-2xl transition-colors cursor-pointer group">
+                            <div class="flex items-center gap-4">
+                                <span class="material-symbols-outlined text-blue-600">notifications_active</span>
+                                <p class="font-semibold text-sm">Хабарландырулар</p>
+                            </div>
+                            <div class="w-10 h-6 bg-blue-500 rounded-full relative">
+                                <div class="absolute right-1 top-1 w-4 h-4 bg-white rounded-full"></div>
+                            </div>
+                        </div>
+                        <a href="index.html" class="w-full flex items-center justify-between p-4 text-error hover:bg-error-container/20 rounded-2xl transition-colors">
+                            <div class="flex items-center gap-4">
+                                <span class="material-symbols-outlined">logout</span>
+                                <p class="font-semibold text-sm">Шығу</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- BottomNavBar -->
+    <nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-2 pb-6 pt-3 bg-white border-t border-blue-50 shadow-[0_-8px_30px_rgba(0,92,185,0.08)] rounded-t-[24px]">
+        <a class="flex flex-col items-center justify-center text-slate-400 hover:text-blue-500 transition-all active:scale-90" href="home.html">
+            <span class="material-symbols-outlined">home</span>
+            <span class="text-[11px] font-medium">Оқу</span>
+        </a>
+        <a class="flex flex-col items-center justify-center text-slate-400 hover:text-blue-500 transition-all active:scale-90" href="tests.html">
+            <span class="material-symbols-outlined">quiz</span>
+            <span class="text-[11px] font-medium">Тесттер</span>
+        </a>
+        <a class="flex flex-col items-center justify-center text-slate-400 hover:text-blue-500 transition-all active:scale-90" href="chat.html">
+            <span class="material-symbols-outlined">smart_toy</span>
+            <span class="text-[11px] font-medium">Ментор</span>
+        </a>
+        <a class="flex flex-col items-center justify-center text-slate-400 hover:text-blue-500 transition-all active:scale-90" href="catalog.html">
+            <span class="material-symbols-outlined">menu_book</span>
+            <span class="text-[11px] font-medium">Каталог</span>
+        </a>
+        <a class="flex flex-col items-center justify-center text-blue-600 bg-blue-50/50 rounded-2xl px-3 py-1 active:scale-90" href="profile.html">
+            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">person</span>
+            <span class="text-[11px] font-medium">Мен</span>
+        </a>
+    </nav>
+</body>
+</html>
