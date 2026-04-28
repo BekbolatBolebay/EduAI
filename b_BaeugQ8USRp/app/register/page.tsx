@@ -32,7 +32,10 @@ export default function RegisterPage() {
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!agreed) return
+    if (!agreed) {
+      alert("Пайдалану шарттарымен келісуіңіз керек")
+      return
+    }
     setLoading(true)
 
     try {
@@ -204,8 +207,8 @@ export default function RegisterPage() {
 
           <Button 
             type="submit" 
-            disabled={!agreed || loading}
-            className="w-full h-12 text-base font-black rounded-xl shadow-lg shadow-primary/20"
+            disabled={loading}
+            className="w-full h-12 text-base font-black rounded-xl shadow-lg shadow-primary/20 bg-primary hover:bg-primary/90"
           >
             {loading ? "Тіркелу..." : "Тіркелу"}
           </Button>
