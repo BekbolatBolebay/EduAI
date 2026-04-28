@@ -23,11 +23,37 @@ export default async function HomePage() {
     .eq("id", user.id)
     .single();
 
-  // Fetch courses (limit to 2 for dashboard)
-  const { data: courses } = await supabase
+  // Fetch courses with user progress
+  const { data: userProgress } = await supabase
+    .from("user_progress")
+    .select("*")
+    .eq("user_id", user.id);
+
+  const { data: allCourses } = await supabase
     .from("courses")
     .select("*")
-    .limit(2);
+    .limit(5);
+
+  const coursesWithProgress = allCourses?.map(course => {
+    const progress = userProgress?.find(p => p.course_id === course.id);
+    return {
+      ...course,
+      progress_percent: progress?.progress_percent || 0
+    };
+  }) || [];
+
+  // Sort by last accessed or just progress for now
+  const activeCourses = coursesWithProgress
+    .filter(c => c.progress_percent > 0)
+    .slice(0, 2);
+  
+  if (activeCourses.length === 0) {
+    activeCourses.push(...coursesWithProgress.slice(0, 2));
+  }
+
+  // Dynamic Suggestion logic
+  const leastProgressCourse = coursesWithProgress
+    .sort((a, b) => a.progress_percent - b.progress_percent)[0];
 
   return (
     <div className="bg-background min-h-screen pb-32">
@@ -116,18 +142,23 @@ export default async function HomePage() {
                 </span>
               </div>
               <span className="text-xs font-black text-outline uppercase tracking-widest">
-                Progress
+                Overall Progress
               </span>
             </div>
             <div className="space-y-4">
               <div className="flex justify-between items-end">
-                <h3 className="text-3xl font-black text-on-surface">0%</h3>
+                <h3 className="text-3xl font-black text-on-surface">
+                  {Math.round(coursesWithProgress.reduce((acc, curr) => acc + curr.progress_percent, 0) / (coursesWithProgress.length || 1))}%
+                </h3>
                 <span className="text-sm font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded-lg">
-                  +0% бүгін
+                  Жақсы қарқын
                 </span>
               </div>
               <div className="w-full bg-slate-100 h-3 rounded-full overflow-hidden shadow-inner">
-                <div className="bg-emerald-500 h-full w-[0%] rounded-full transition-all duration-1000"></div>
+                <div 
+                  className="bg-emerald-500 h-full rounded-full transition-all duration-1000"
+                  style={{ width: `${Math.round(coursesWithProgress.reduce((acc, curr) => acc + curr.progress_percent, 0) / (coursesWithProgress.length || 1))}%` }}
+                ></div>
               </div>
             </div>
           </div>
@@ -149,7 +180,7 @@ export default async function HomePage() {
             </div>
 
             <div className="space-y-6">
-              {courses?.map((course) => (
+              {activeCourses.map((course) => (
                 <div key={course.id} className="bg-white p-6 rounded-[32px] shadow-sm border border-slate-100 flex gap-6 group hover:shadow-xl hover:border-primary/20 transition-all duration-500">
                   <div className="w-28 h-28 rounded-[24px] overflow-hidden flex-shrink-0 bg-blue-50 relative">
                     <Image
@@ -169,10 +200,13 @@ export default async function HomePage() {
                     </h4>
                     <div className="flex items-center gap-4">
                       <div className="flex-grow bg-slate-100 h-2 rounded-full shadow-inner">
-                        <div className="bg-primary h-full w-[0%] rounded-full transition-all duration-500"></div>
+                        <div 
+                          className="bg-primary h-full rounded-full transition-all duration-500"
+                          style={{ width: `${course.progress_percent}%` }}
+                        ></div>
                       </div>
                       <span className="text-sm font-black text-slate-500">
-                        0%
+                        {course.progress_percent}%
                       </span>
                     </div>
                   </div>
@@ -209,14 +243,16 @@ export default async function HomePage() {
                   </span>
                 </div>
                 <p className="text-lg font-bold text-on-tertiary-container leading-tight">
-                  Python-нан жаңа сабақ шықты!
+                  {leastProgressCourse?.progress_percent === 0 
+                    ? `${leastProgressCourse.title} курсын бастауды ұсынамын!` 
+                    : `${leastProgressCourse?.title} курсын жалғастырайық!`}
                 </p>
               </div>
               <p className="text-on-surface-variant mb-8 leading-relaxed font-medium">
-                Бүгін "Айнымалылар мен деректер типтері" тақырыбын бастауды ұсынамын.
+                {leastProgressCourse?.description || "Бүгін жаңа тақырыпты меңгеруге тамаша уақыт."}
               </p>
-              <Link href="/chat" className="block w-full bg-tertiary text-on-tertiary py-4 rounded-2xl font-black text-center hover:bg-tertiary-container transition-all active:scale-95 shadow-lg shadow-tertiary/20">
-                Ментормен сөйлесу
+              <Link href={leastProgressCourse ? `/lessons/${leastProgressCourse.id}` : "/chat"} className="block w-full bg-tertiary text-on-tertiary py-4 rounded-2xl font-black text-center hover:bg-tertiary-container transition-all active:scale-95 shadow-lg shadow-tertiary/20">
+                {leastProgressCourse ? "Оқуды бастау" : "Ментормен сөйлесу"}
               </Link>
             </div>
           </aside>

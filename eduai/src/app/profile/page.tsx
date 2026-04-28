@@ -19,5 +19,26 @@ export default async function ProfilePage() {
     .eq("id", user.id)
     .single();
 
-  return <ProfileClient profile={profile} />;
+  // Fetch achievements
+  const { data: userAchievements } = await supabase
+    .from("user_achievements")
+    .select(`
+      unlocked_at,
+      achievements (*)
+    `)
+    .eq("user_id", user.id);
+
+  // Fetch test results
+  const { data: testResults } = await supabase
+    .from("test_results")
+    .select("*")
+    .eq("user_id", user.id)
+    .order("created_at", { ascending: false })
+    .limit(5);
+
+  return <ProfileClient 
+    profile={profile} 
+    achievements={userAchievements || []}
+    testResults={testResults || []}
+  />;
 }

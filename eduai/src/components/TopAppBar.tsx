@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
 
@@ -13,7 +15,10 @@ export default function TopAppBar() {
         </span>
       </Link>
       <div className="flex items-center gap-4">
-        <button className="hover:bg-blue-50 transition-colors active:scale-95 duration-200 p-2.5 rounded-2xl text-outline">
+        <button 
+          onClick={() => alert("Жаңа хабарламалар жоқ")}
+          className="hover:bg-blue-50 transition-colors active:scale-95 duration-200 p-2.5 rounded-2xl text-outline"
+        >
           <span className="material-symbols-outlined">notifications</span>
         </button>
         <Link

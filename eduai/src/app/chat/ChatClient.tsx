@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import BottomNavBar from "@/components/BottomNavBar";
 import { createClient } from "@/utils/supabase/client";
+import ChatQuiz from "@/components/ChatQuiz";
 
 type Message = {
   role: "user" | "assistant";
@@ -154,9 +155,26 @@ export default function ChatClient() {
               <div className={`glass-panel p-6 rounded-[24px] shadow-sm ${
                 m.role === "assistant" ? "rounded-tl-none" : "rounded-tr-none bg-primary/5"
               }`}>
-                <p className="font-medium text-on-surface leading-relaxed">
-                  {m.content}
-                </p>
+                {/* Parse for Quiz JSON */}
+                {(() => {
+                  const quizMatch = m.content.match(/\{[\s\S]*"type":\s*"quiz"[\s\S]*\}/);
+                  if (quizMatch) {
+                    try {
+                      const quizData = JSON.parse(quizMatch[0]);
+                      const textContent = m.content.replace(quizMatch[0], "").trim();
+                      return (
+                        <div className="space-y-6">
+                          {textContent && <p className="font-medium text-on-surface leading-relaxed">{textContent}</p>}
+                          <ChatQuiz questions={quizData.questions} />
+                        </div>
+                      );
+                    } catch (e) {
+                      return <p className="font-medium text-on-surface leading-relaxed">{m.content}</p>;
+                    }
+                  }
+                  return <p className="font-medium text-on-surface leading-relaxed">{m.content}</p>;
+                })()}
+                
                 {m.image_url && (
                   <div className="mt-4 rounded-2xl overflow-hidden shadow-lg border border-primary/10">
                     <img src={m.image_url} alt="Generated" className="w-full h-auto" />
@@ -165,6 +183,20 @@ export default function ChatClient() {
               </div>
             </div>
           ))}
+          
+          {/* Typing Indicator */}
+          {isLoading && (
+            <div className="flex gap-4 max-w-[85%] animate-in fade-in slide-in-from-left-4 duration-300">
+              <div className="flex-shrink-0 w-10 h-10 rounded-2xl bg-blue-100 text-primary flex items-center justify-center shadow-sm">
+                <span className="material-symbols-outlined fill-1 animate-bounce">smart_toy</span>
+              </div>
+              <div className="glass-panel px-6 py-4 rounded-[24px] rounded-tl-none shadow-sm flex items-center gap-1">
+                <div className="w-2 h-2 bg-primary/40 rounded-full animate-bounce [animation-delay:-0.3s]"></div>
+                <div className="w-2 h-2 bg-primary/40 rounded-full animate-bounce [animation-delay:-0.15s]"></div>
+                <div className="w-2 h-2 bg-primary/40 rounded-full animate-bounce"></div>
+              </div>
+            </div>
+          )}
           <div ref={messagesEndRef} />
         </div>
       </main>
@@ -177,7 +209,18 @@ export default function ChatClient() {
             onClick={() => inputRef.current?.focus()}
             className="bg-white/90 backdrop-blur-2xl border border-blue-100 rounded-[32px] p-2.5 shadow-2xl flex items-center gap-3 cursor-text"
           >
-            <button type="button" className="p-3.5 text-outline hover:text-primary transition-colors hover:bg-blue-50 rounded-2xl">
+            <input
+              type="file"
+              id="chat-file-input"
+              className="hidden"
+              accept="image/*"
+              onChange={() => alert("Сурет талдау функциясы жақында қосылады!")}
+            />
+            <button 
+              type="button" 
+              onClick={() => document.getElementById('chat-file-input')?.click()}
+              className="p-3.5 text-outline hover:text-primary transition-colors hover:bg-blue-50 rounded-2xl"
+            >
               <span className="material-symbols-outlined">add_circle</span>
             </button>
             <input

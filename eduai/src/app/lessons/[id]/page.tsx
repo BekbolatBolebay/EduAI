@@ -19,18 +19,23 @@ export default async function CourseLessonsPage({
   }
 
   // Fetch course with its lessons
-  const { data: course } = await supabase
+  const { data: course, error } = await supabase
     .from("courses")
     .select("*, lessons(*)")
     .eq("id", id)
     .single();
 
+  if (error) {
+    console.error("Lessons Page Error:", error);
+  }
+
   if (!course) {
+    console.warn("Course not found for ID:", id);
     return redirect("/catalog");
   }
 
   // Sort lessons by order_index
-  course.lessons = course.lessons.sort((a: any, b: any) => a.order_index - b.order_index);
+  const sortedLessons = (course.lessons || []).sort((a: any, b: any) => a.order_index - b.order_index);
 
-  return <LessonClient course={course} />;
+  return <LessonClient course={{ ...course, lessons: sortedLessons }} />;
 }
