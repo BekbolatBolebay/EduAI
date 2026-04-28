@@ -61,31 +61,37 @@ export default function RegisterPage() {
       if (authData.user) {
         console.log("User created:", authData.user.id)
         
-        // The trigger 'handle_new_user' might already have created the profile,
-        // but it doesn't handle 'role' and 'grade' currently in the SQL.
-        // So we update it manually just in case or to add missing fields.
+        // Ensure profile is created
         const { error: profileError } = await supabase.from("profiles").upsert({
           id: authData.user.id,
           full_name: fullName,
-          role: role, // Note: Ensure 'role' column exists in your profiles table!
+          role: role,
           grade: role === "student" ? grade : null,
+          xp: 0,
+          streak: 0
         })
 
         if (profileError) {
-          console.warn("Profile Update Warning:", profileError)
-          // Don't throw here, maybe the user was still created
+          console.error("Profile creation failed:", profileError)
+          throw new Error("Профиль жасау мүмкін болмады: " + profileError.message)
         }
         
-        toast.success("Тіркелу сәтті аяқталды!")
-        
-        // Automatic login redirect
-        setTimeout(() => {
-          if (role === "teacher") {
-            router.push("/teacher")
-          } else {
-            router.push("/home")
-          }
-        }, 1000)
+        // Force sign in to ensure session is created (workaround for Supabase session issues)
+        const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({
+          email,
+          password
+        })
+
+        if (signInError) {
+          console.warn("Auto-login failed:", signInError)
+          toast.info("Тіркелу сәтті! Енді жүйеге кіріңіз.")
+          router.push("/login")
+        } else {
+          toast.success("Тіркелу сәтті аяқталды!")
+          setTimeout(() => {
+            router.push(role === "teacher" ? "/teacher" : "/home")
+          }, 1000)
+        }
       }
     } catch (error: any) {
       console.error("Registration failed:", error)

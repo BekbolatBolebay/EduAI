@@ -32,7 +32,16 @@ export default function LoginPage() {
 
       if (error) throw error
 
-      switch (selectedRole) {
+      // Fetch actual profile to determine role
+      const { data: profile } = await supabase
+        .from("profiles")
+        .select("role")
+        .eq("id", data.user?.id)
+        .single()
+
+      const userRole = profile?.role || selectedRole
+
+      switch (userRole) {
         case "teacher":
           router.push("/teacher")
           break
