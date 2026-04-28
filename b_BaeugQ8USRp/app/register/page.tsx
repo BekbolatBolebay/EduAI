@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/select"
 import { EduAILogo } from "@/components/edu-ai-logo"
 import { supabase } from "@/lib/supabase"
+import { toast } from "sonner"
 
 type UserRole = "student" | "teacher"
 
@@ -75,8 +76,16 @@ export default function RegisterPage() {
           // Don't throw here, maybe the user was still created
         }
         
-        alert("Тіркелу сәтті аяқталды! Жүйеге кіріңіз.")
-        router.push("/login")
+        toast.success("Тіркелу сәтті аяқталды!")
+        
+        // Automatic login redirect
+        setTimeout(() => {
+          if (role === "teacher") {
+            router.push("/teacher")
+          } else {
+            router.push("/home")
+          }
+        }, 1000)
       }
     } catch (error: any) {
       console.error("Registration failed:", error)
