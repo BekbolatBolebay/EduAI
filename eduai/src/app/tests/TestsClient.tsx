@@ -41,6 +41,9 @@ export default function TestsClient({
   const [joinPin, setJoinPin] = useState("");
   const [sessionParticipants, setSessionParticipants] = useState<any[]>([]);
   const [currentUser, setCurrentUser] = useState<any>(null);
+  const [guestName, setGuestName] = useState("");
+  const [showGuestModal, setShowGuestModal] = useState(false);
+  const [pendingSessionId, setPendingSessionId] = useState<string | null>(null);
   const [editingQuiz, setEditingQuiz] = useState<any>(null);
   const [editTitle, setEditTitle] = useState("");
   const [editQuestions, setEditQuestions] = useState("");
@@ -104,12 +107,18 @@ export default function TestsClient({
   const updateSessionScore = async (finalScore: number) => {
     try {
       const { data: { user } } = await supabase.auth.getUser();
-      if (user && activeSession) {
-        const { error } = await supabase.from("session_participants").update({
-          score: finalScore,
-          is_finished: true
-        }).eq("session_id", activeSession.id).eq("user_id", user.id);
-        if (error) console.error("Update Session Error:", error);
+      if (activeSession) {
+        if (user) {
+          await supabase.from("session_participants").update({
+            score: finalScore,
+            is_finished: true
+          }).eq("session_id", activeSession.id).eq("user_id", user.id);
+        } else if (guestName) {
+          await supabase.from("session_participants").update({
+            score: finalScore,
+            is_finished: true
+          }).eq("session_id", activeSession.id).eq("guest_name", guestName);
+        }
       }
     } catch (e) {
       console.error(e);
@@ -144,6 +153,7 @@ export default function TestsClient({
           score, 
           is_finished, 
           user_id,
+          guest_name,
           profiles!user_id(full_name)
         `)
         .eq("session_id", activeSession.id);
@@ -159,7 +169,7 @@ export default function TestsClient({
         // Fallback: try without join
         const { data: simpleData } = await supabase
           .from("session_participants")
-          .select("id, score, is_finished, user_id")
+          .select("id, score, is_finished, user_id, guest_name")
           .eq("session_id", activeSession.id);
         if (simpleData) setSessionParticipants(simpleData);
       } else {
@@ -188,8 +198,8 @@ export default function TestsClient({
     };
   }, [activeSession]);
 
-  const joinSessionById = async (id: string) => {
-    const { data: session, error } = await supabase
+  const joinSessionById = async (id: string, name?: string) => {
+    const { data: session } = await supabase
       .from("test_sessions")
       .select("*")
       .eq("id", id)
@@ -198,15 +208,28 @@ export default function TestsClient({
     if (session) {
       const test = [...standardTests, ...communityTests].find(t => t.id === session.test_id);
       if (test) {
+        const { data: { user } } = await supabase.auth.getUser();
+        
+        if (!user && !name) {
+          setPendingSessionId(id);
+          setShowGuestModal(true);
+          return;
+        }
+
         startTest(test);
         setActiveSession(session);
-        // Register participant
-        const { data: { user } } = await supabase.auth.getUser();
+
         if (user) {
           await supabase.from("session_participants").upsert({
             session_id: session.id,
             user_id: user.id
           });
+        } else if (name) {
+          await supabase.from("session_participants").insert({
+            session_id: session.id,
+            guest_name: name
+          });
+          setGuestName(name);
         }
       }
     }
@@ -575,7 +598,7 @@ export default function TestsClient({
                             {idx + 1}
                           </div>
                           <p className="font-bold text-sm truncate text-on-surface">
-                            {p.profiles?.full_name || "Оқушы"}
+                            {p.profiles?.full_name || p.guest_name || "Оқушы"}
                           </p>
                         </div>
                         <div className="flex items-center gap-2">
@@ -635,6 +658,38 @@ export default function TestsClient({
                 className="w-full py-4 bg-slate-100 text-on-surface rounded-2xl font-black hover:bg-slate-200 transition-all"
               >
                 Жабу
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Guest Join Modal */}
+      {showGuestModal && (
+        <div className="fixed inset-0 z-[120] flex items-center justify-center p-6 bg-slate-900/40 backdrop-blur-md animate-in fade-in duration-300">
+          <div className="bg-white w-full max-w-md rounded-[48px] p-10 shadow-2xl space-y-8 animate-in zoom-in-95 duration-500">
+            <div className="text-center space-y-2">
+              <h3 className="text-3xl font-black text-on-surface">Сессияға қосылу</h3>
+              <p className="text-on-surface-variant font-medium">Есіміңізді жазыңыз</p>
+            </div>
+
+            <div className="space-y-4">
+              <input 
+                type="text" 
+                placeholder="Мысалы: Арман"
+                value={guestName}
+                onChange={(e) => setGuestName(e.target.value)}
+                className="w-full px-6 py-4 bg-slate-50 border-2 border-slate-100 rounded-2xl focus:border-primary outline-none font-bold text-center"
+              />
+              <button 
+                onClick={() => {
+                  if (guestName.length < 2) return alert("Есім тым қысқа");
+                  if (pendingSessionId) joinSessionById(pendingSessionId, guestName);
+                  setShowGuestModal(false);
+                }}
+                className="w-full py-4 bg-primary text-on-primary rounded-2xl font-black shadow-lg hover:scale-[1.02] active:scale-95 transition-all"
+              >
+                Қатысу
               </button>
             </div>
           </div>

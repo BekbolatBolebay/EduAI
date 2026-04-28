@@ -88,12 +88,17 @@ create table test_sessions (
 create table session_participants (
   id uuid default gen_random_uuid() primary key,
   session_id uuid references test_sessions on delete cascade not null,
-  user_id uuid references profiles on delete cascade not null,
+  user_id uuid references profiles on delete cascade, -- Optional for guests
+  guest_name text, -- For guests joining without account
   score integer default 0,
   is_finished boolean default false,
   joined_at timestamp with time zone default now(),
   unique(session_id, user_id)
 );
+
+-- Update RLS to allow guest insert (if we want to allow anyone to join)
+create policy "Anyone can join sessions as guest" on session_participants for insert with check (true);
+create policy "Anyone can update guest score" on session_participants for update using (true);
 
 -- Enable RLS
 alter table profiles enable row level security;

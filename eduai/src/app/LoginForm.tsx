@@ -90,42 +90,6 @@ export default function LoginForm({ error }: { error?: string }) {
           arrow_forward
         </span>
       </button>
-
-      {/* Divider */}
-      <div className="relative my-10 flex items-center">
-        <div className="flex-grow border-t border-outline-variant"></div>
-        <span className="px-4 text-outline text-[11px] font-bold uppercase tracking-widest bg-transparent">
-          немесе
-        </span>
-        <div className="flex-grow border-t border-outline-variant"></div>
-      </div>
-
-      {/* Social Logins */}
-      <div className="grid grid-cols-2 gap-4">
-        <button 
-          type="button"
-          onClick={() => alert("Google арқылы кіру дайындалуда...")}
-          className="flex items-center justify-center gap-3 py-3.5 border border-outline-variant rounded-2xl hover:bg-surface-container-low active:scale-95 transition-all group"
-        >
-          <Image
-            alt="Google icon"
-            width={20}
-            height={20}
-            src="https://lh3.googleusercontent.com/aida-public/AB6AXuAnn13-hHrBIF380ssZfs1-6V_LF8FU2CRsQ7jXSxKtLYmfFnIXS_ftaPq3JgAzhlT7tBJWoSm2e0SW8j_YaLk9w7TBGgTGRoxXBjrqZwH_o4buQokg7zqaAqoOkpHNV0yvQu3-6dM1AOuf2DMBpiNyzLCSLMuwq20fghXnBD4vj61B-D9D7AcsV_13E2rQez_NAZjgzNCjmXHgFAQ9Jycmyy1jYHIT5dSCuKcWm7wYlnh-0Wf8S6fBr2T5H7MKBhUDR5tHDpO8uFVC"
-          />
-          <span className="font-bold text-on-surface">Google</span>
-        </button>
-        <button 
-          type="button"
-          onClick={() => alert("Apple арқылы кіру дайындалуда...")}
-          className="flex items-center justify-center gap-3 py-3.5 border border-outline-variant rounded-2xl hover:bg-surface-container-low active:scale-95 transition-all group"
-        >
-          <span className="material-symbols-outlined text-on-surface text-[22px]">
-            ios
-          </span>
-          <span className="font-bold text-on-surface">Apple</span>
-        </button>
-      </div>
     </form>
   );
 }
