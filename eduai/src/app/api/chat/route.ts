@@ -70,6 +70,7 @@ export async function POST(req: Request) {
               ]
             }
             Маңызды: Квиз сұрақтарын жауаптың ішінде жай мәтін ретінде қайталама. Тек JSON жеткілікті.`,
+          },
           ...messages.map((m: any) => ({
             role: m.role,
             content: m.content,
