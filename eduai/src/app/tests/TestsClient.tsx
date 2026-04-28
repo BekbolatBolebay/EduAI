@@ -158,34 +158,27 @@ export default function TestsClient({
 
     // Initial fetch
     const fetchParticipants = async () => {
+      if (!activeSession) return;
       const { data, error } = await supabase
         .from("session_participants")
-        .select(`
-          id, 
-          score, 
-          is_finished, 
-          user_id,
-          guest_name,
-          profiles!user_id(full_name)
-        `)
+        .select("id, score, is_finished, user_id, guest_name, profiles(full_name)")
         .eq("session_id", activeSession.id);
       
       if (error) {
-        console.error("Session Fetch Error Detail:", {
-          message: error.message,
-          code: error.code,
-          details: error.details,
-          hint: error.hint
-        });
-        
-        // Fallback: try without join
-        const { data: simpleData } = await supabase
+        console.error("Session Fetch Error Detail:", error.message, error.details, error.hint);
+        // Fallback: try without the profiles join
+        const { data: simpleData, error: simpleError } = await supabase
           .from("session_participants")
-          .select("id, score, is_finished, user_id")
+          .select("id, score, is_finished, user_id, guest_name")
           .eq("session_id", activeSession.id);
-        if (simpleData) setSessionParticipants(simpleData);
+        
+        if (simpleError) {
+          console.error("Fallback Fetch Error:", simpleError.message);
+        } else if (simpleData) {
+          setSessionParticipants(simpleData);
+        }
       } else {
-        setSessionParticipants(data);
+        setSessionParticipants(data || []);
       }
     };
     fetchParticipants();
