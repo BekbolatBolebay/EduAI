@@ -2,7 +2,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { EduAILogo } from "@/components/edu-ai-logo"
 import { Button } from "@/components/ui/button"
-import { ArrowRight, GraduationCap, Quiz, SmartToy, Monitoring, Engineering } from "lucide-react"
+import { ArrowRight, GraduationCap, Cpu } from "lucide-react"
 
 export default function LandingPage() {
   return (
@@ -122,7 +122,7 @@ export default function LandingPage() {
             {[
               { step: "01", title: "Тіркелу", desc: "Платформаға тіркеліп, өз сыныбыңыз бен пәніңізді таңдаңыз.", icon: GraduationCap, color: "blue" },
               { step: "02", title: "Тест тапсыру", desc: "Деңгейіңізді анықтау үшін арнайы дайындалған тесттерден өтіңіз.", icon: ArrowRight, color: "emerald" },
-              { step: "03", title: "AI тапсырмалар", desc: "Жасанды интеллект сіздің нәтижеңізге қарай жеке тапсырмалар дайындайды.", icon: SmartToy, color: "amber" }
+              { step: "03", title: "AI тапсырмалар", desc: "Жасанды интеллект сіздің нәтижеңізге қарай жеке тапсырмалар дайындайды.", icon: Cpu, color: "amber" }
             ].map((item, idx) => (
               <div key={idx} className="bg-card p-10 rounded-[40px] shadow-sm hover:shadow-xl transition-all border border-border group">
                 <div className="flex justify-between items-start mb-8">
